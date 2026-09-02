@@ -66,18 +66,11 @@ const skills = [
 ];
 
 function Index() {
+  const isMaintenanceMode = import.meta.env.VITE_MAINTENANCE_MODE === "true";
   const [skillIndex, setSkillIndex] = useState(0);
-  const [isPreviewMode, setIsPreviewMode] = useState(false);
 
   useEffect(() => {
-    const params = new URLSearchParams(window.location.search);
-    const previewFromUrl = params.get("preview") === "true" || params.get("preview") === "1";
-    const previewFromStorage = window.localStorage.getItem("portfolio-preview") === "true";
-    setIsPreviewMode(previewFromUrl || previewFromStorage);
-  }, []);
-
-  useEffect(() => {
-    if (!isPreviewMode) {
+    if (isMaintenanceMode) {
       return;
     }
 
@@ -86,9 +79,9 @@ function Index() {
       1600,
     );
     return () => window.clearInterval(id);
-  }, [isPreviewMode]);
+  }, [isMaintenanceMode]);
 
-  if (!isPreviewMode) {
+  if (isMaintenanceMode) {
     return (
       <main className="maintenance-page" role="status" aria-live="polite">
         <div className="maintenance-card">
