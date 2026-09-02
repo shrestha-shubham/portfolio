@@ -162,8 +162,8 @@
   --radius: 0.25rem;
   --ink: var(--foreground);
   --stroke: oklch(0.82 0 0);
-  --font-display: "Rajdhani", sans-serif;
-  --font-body: "Rajdhani", sans-serif;
+  --font-display: "Jaini", sans-serif;
+  --font-body: "Jaini", sans-serif;
   --shadow-card: 0 22px 45px -18px oklch(0 0 0 / 0.4);
 }
 

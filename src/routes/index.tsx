@@ -55,6 +55,18 @@ const projects = [
   { title: "Kathmandu Eats", meta: "PWA · Supabase · 2023" },
 ];
 
+const isLocalHostname = (hostname?: string) => {
+  if (!hostname) return false;
+
+  const normalized = hostname.toLowerCase().replace(/:\d+$/, "");
+  return (
+    normalized === "localhost" ||
+    normalized === "127.0.0.1" ||
+    normalized === "::1" ||
+    normalized === "[::1]" ||
+    normalized.endsWith(".localhost")
+  );
+};
 
 const skills = [
   "WEB DEVELOPMENT",
@@ -66,7 +78,16 @@ const skills = [
 ];
 
 function Index() {
-  const isMaintenanceMode = import.meta.env.VITE_MAINTENANCE_MODE === "true";
+  const isLocalServer =
+    typeof window !== "undefined" && isLocalHostname(window.location.hostname);
+  const runtimeMaintenanceSetting =
+    typeof process !== "undefined" && process.env
+      ? process.env.VITE_MAINTENANCE_MODE
+      : undefined;
+  const isMaintenanceMode =
+    (String(runtimeMaintenanceSetting ?? import.meta.env.VITE_MAINTENANCE_MODE ?? "false")
+      .trim()
+      .toLowerCase() === "true") && !isLocalServer;
   const [skillIndex, setSkillIndex] = useState(0);
 
   useEffect(() => {
