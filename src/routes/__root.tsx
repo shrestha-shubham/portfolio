@@ -13,7 +13,7 @@ import appCss from "../styles.css?url";
 import { reportLovableError } from "../lib/lovable-error-reporting";
 
 function NotFoundComponent() {
-  return <main className="not-found-page"><header className="reference-header"><Link className="reference-logo" to="/">SO.</Link><nav className="reference-nav"><Link to="/">Home</Link><Link to="/work">Work</Link><Link to="/about">About</Link><Link to="/contact">Contact</Link></nav></header><div className="not-found-copy"><h1>404</h1><p>Page not found</p><span>The page you’re looking for doesn’t exist<br />or has been moved.</span><Link to="/">Back home&nbsp; →</Link></div></main>;
+  return <main className="not-found-page"><header className="reference-header"><Link className="reference-logo" to="/">SO.</Link><nav className="reference-nav"><Link to="/work">Work</Link><Link to="/about">About</Link><Link to="/contact">Contact</Link></nav></header><div className="not-found-copy"><h1>404</h1><p>Page not found</p><span>The page you’re looking for doesn’t exist<br />or has been moved.</span><Link to="/">Back home&nbsp; →</Link></div></main>;
 }
 
 function ErrorComponent({ error, reset }: { error: Error; reset: () => void }) {
@@ -42,12 +42,12 @@ function ErrorComponent({ error, reset }: { error: Error; reset: () => void }) {
           >
             Try again
           </button>
-          <a
-            href="/"
+          <Link
+            to="/"
             className="inline-flex items-center justify-center rounded-md border border-input bg-background px-4 py-2 text-sm font-medium text-foreground transition-colors hover:bg-accent"
           >
             Go home
-          </a>
+          </Link>
         </div>
       </div>
     </div>
@@ -77,7 +77,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { rel: "preconnect", href: "https://fonts.gstatic.com", crossOrigin: "anonymous" },
       {
         rel: "stylesheet",
-        href: "https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap",
+        href: "https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@400;500;600;700;800&display=swap",
       },
       { rel: "icon", href: "/favicon.ico", type: "image/x-icon" },
     ],

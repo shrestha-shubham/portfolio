@@ -14,6 +14,7 @@ import { Route as AboutRouteImport } from './routes/about'
 import { Route as ContactRouteImport } from './routes/contact'
 import { Route as WorkRouteImport } from './routes/work'
 import { Route as WorkIndexRouteImport } from './routes/work/index'
+import { Route as WorkSlugRouteImport } from './routes/work/$slug'
 import { Route as WorkLuminaRouteImport } from './routes/work/lumina'
 
 const IndexRoute = IndexRouteImport.update({
@@ -41,6 +42,11 @@ const WorkIndexRoute = WorkIndexRouteImport.update({
   path: '/',
   getParentRoute: () => WorkRoute,
 } as any)
+const WorkSlugRoute = WorkSlugRouteImport.update({
+  id: '/$slug',
+  path: '/$slug',
+  getParentRoute: () => WorkRoute,
+} as any)
 const WorkLuminaRoute = WorkLuminaRouteImport.update({
   id: '/lumina',
   path: '/lumina',
@@ -52,6 +58,7 @@ export interface FileRoutesByFullPath {
   '/about': typeof AboutRoute
   '/contact': typeof ContactRoute
   '/work': typeof WorkRouteWithChildren
+  '/work/$slug': typeof WorkSlugRoute
   '/work/lumina': typeof WorkLuminaRoute
   '/work/': typeof WorkIndexRoute
 }
@@ -59,6 +66,7 @@ export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
   '/contact': typeof ContactRoute
+  '/work/$slug': typeof WorkSlugRoute
   '/work/lumina': typeof WorkLuminaRoute
   '/work': typeof WorkIndexRoute
 }
@@ -68,20 +76,29 @@ export interface FileRoutesById {
   '/about': typeof AboutRoute
   '/contact': typeof ContactRoute
   '/work': typeof WorkRouteWithChildren
+  '/work/$slug': typeof WorkSlugRoute
   '/work/lumina': typeof WorkLuminaRoute
   '/work/': typeof WorkIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/about' | '/contact' | '/work' | '/work/lumina' | '/work/'
+  fullPaths:
+    | '/'
+    | '/about'
+    | '/contact'
+    | '/work'
+    | '/work/$slug'
+    | '/work/lumina'
+    | '/work/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/about' | '/contact' | '/work/lumina' | '/work'
+  to: '/' | '/about' | '/contact' | '/work/$slug' | '/work/lumina' | '/work'
   id:
     | '__root__'
     | '/'
     | '/about'
     | '/contact'
     | '/work'
+    | '/work/$slug'
     | '/work/lumina'
     | '/work/'
   fileRoutesById: FileRoutesById
@@ -130,6 +147,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof WorkIndexRouteImport
       parentRoute: typeof WorkRoute
     }
+    '/work/$slug': {
+      id: '/work/$slug'
+      path: '/$slug'
+      fullPath: '/work/$slug'
+      preLoaderRoute: typeof WorkSlugRouteImport
+      parentRoute: typeof WorkRoute
+    }
     '/work/lumina': {
       id: '/work/lumina'
       path: '/lumina'
@@ -141,11 +165,13 @@ declare module '@tanstack/react-router' {
 }
 
 interface WorkRouteChildren {
+  WorkSlugRoute: typeof WorkSlugRoute
   WorkLuminaRoute: typeof WorkLuminaRoute
   WorkIndexRoute: typeof WorkIndexRoute
 }
 
 const WorkRouteChildren: WorkRouteChildren = {
+  WorkSlugRoute: WorkSlugRoute,
   WorkLuminaRoute: WorkLuminaRoute,
   WorkIndexRoute: WorkIndexRoute,
 }
