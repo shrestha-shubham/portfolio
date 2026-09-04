@@ -1,46 +1,26 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, Link } from "@tanstack/react-router";
+import { SiteShell } from "@/components/site-shell";
+import portrait from "@/assets/portrait.png";
+
+const projects = [
+  { number: "01", slug: "ecommerce-platform", title: "E-Commerce Platform", description: "A full-stack commerce system with catalog, payments, orders and delivery intelligence.", category: "Full-stack product", technology: "React / Node.js", year: "2025" },
+  { number: "02", slug: "research-management", title: "University Research Management System", description: "A coordinated workspace for research projects, approvals, researchers and academic workflows.", category: "Business system", technology: "TypeScript / PostgreSQL", year: "2025" },
+  { number: "03", slug: "disaster-relief", title: "Disaster Relief Management System", description: "A response platform connecting relief requests, resources, volunteers and distribution teams.", category: "Civic technology", technology: "React / API design", year: "2024" },
+  { number: "04", slug: "performance-dashboard", title: "Business Performance Dashboard", description: "A focused operating view for sales, revenue, customers, inventory and performance.", category: "Data product", technology: "React / Data viz", year: "2024" },
+  { number: "05", slug: "portfolio-experience", title: "Portfolio Experience", description: "This portfolio, designed around the intersection of business, design and technology.", category: "Digital experience", technology: "React / CSS", year: "2026" },
+];
+
+const approach = [{ number: "01", title: "Understand", text: "I learn the context, people and constraints before reaching for a solution." }, { number: "02", title: "Define", text: "I turn observations into a clear product direction and measurable priorities." }, { number: "03", title: "Design", text: "I shape calm, useful interfaces that make complex work easier to navigate." }, { number: "04", title: "Build", text: "I develop robust products with thoughtful details and maintainable foundations." }, { number: "05", title: "Iterate", text: "I test, learn and refine until the product earns its place in someone's workflow." }];
+
+function ContactForm() {
+  return <form className="contact-form" onSubmit={(event) => { event.preventDefault(); const form = event.currentTarget; if (!form.reportValidity()) return; form.reset(); }}><label>Name<input name="name" required placeholder="Your name" /></label><label>Email<input name="email" type="email" required placeholder="Your email" /></label><label>What are you building?<textarea name="message" required placeholder="Tell me a little about it" rows={3} /></label><button type="submit">Send <span aria-hidden="true">→</span></button></form>;
+}
 
 export const Route = createFileRoute("/")({
-  head: () => ({
-    meta: [
-      { title: "Maintenance" },
-      {
-        name: "description",
-        content: "This website is temporarily unavailable while maintenance is underway.",
-      },
-    ],
-  }),
-  component: MaintenancePage,
+  head: () => ({ meta: [{ title: "SO. — Business × Technology" }, { name: "description", content: "I build digital products that create impact." }] }),
+  component: Index,
 });
 
-function MaintenancePage() {
-  return (
-    <main className="maintenance-page">
-      <div className="maintenance-grid" aria-hidden="true" />
-      <header className="maintenance-header">
-        <span className="maintenance-mark">Maintenance</span>
-        <span className="maintenance-status">
-          <span className="status-dot" />
-          System maintenance
-        </span>
-      </header>
-      <section className="maintenance-content" aria-labelledby="maintenance-title">
-        <p className="maintenance-kicker">Back shortly</p>
-        <h1 id="maintenance-title">
-          A little quiet
-          <br />
-          while we improve.
-        </h1>
-        <p className="maintenance-message">
-          The studio is taking a brief maintenance break. The site will be back online soon.
-        </p>
-        <div className="maintenance-line" />
-        <p className="maintenance-note">Thank you for your patience.</p>
-      </section>
-      <footer className="maintenance-footer">
-        <span>Digital studio</span>
-        <span>© 2026</span>
-      </footer>
-    </main>
-  );
+function Index() {
+  return <SiteShell active="home" className="homepage"><section className="reference-hero" id="home-hero" data-nav-section="home" aria-labelledby="hero-title"><img className="hero-portrait" src={portrait} alt="" aria-hidden="true" /><div className="hero-copy"><h1 id="hero-title">Business × Technology</h1><p>I build digital products that create impact.</p></div></section><section className="portfolio-section intro-section" id="intro"><div className="section-heading"><p className="page-label">What I do</p><h2>I don't just build websites.<br />I build digital products.</h2><p className="section-lede">I combine business thinking, product design and technology to turn ideas into practical digital experiences.</p></div><div className="three-columns">{[{ title: "Business", text: "Understanding problems, users, markets and opportunities." }, { title: "Design", text: "Turning ideas into clear, intuitive and useful interfaces." }, { title: "Technology", text: "Building functional and scalable digital products." }].map((item) => <article key={item.title}><h3>{item.title}</h3><p>{item.text}</p></article>)}</div></section><section className="portfolio-section work-section" id="work" data-nav-section="work"><div className="section-heading section-heading-row"><div><p className="page-label">Selected work</p><h2>Products built for<br />real-world momentum.</h2></div><span className="section-index">01 — 05</span></div><div className="project-list project-list-large">{projects.map((project) => <Link className="project-item" to={`/work/${project.slug}`} key={project.number}><span className="project-number">{project.number}</span><span className="project-main"><strong>{project.title}</strong><small>{project.description}</small></span><span className="project-meta"><small>{project.category}</small><small>{project.technology}</small><small>{project.year}</small></span><span className="project-arrow">→</span></Link>)}</div></section><section className="portfolio-section approach-section" id="approach"><div className="section-heading"><p className="page-label">My approach</p><h2>How I build.</h2></div><div className="process-list">{approach.map((step) => <article key={step.number}><span>{step.number}</span><h3>{step.title}</h3><p>{step.text}</p></article>)}</div></section><section className="portfolio-section skills-section" id="skills"><div className="section-heading"><p className="page-label">Capabilities</p><h2>Skills with a<br />practical edge.</h2></div><div className="skill-groups">{[{ title: "Business", items: "Business Analysis · Product Thinking · Problem Solving · Requirements Analysis · Process Design" }, { title: "Design", items: "UI Design · UX Design · Wireframing · Prototyping · Responsive Design · Design Systems" }, { title: "Technology", items: "Frontend Development · Backend Development · Database Design · API Development · Git / GitHub" }].map((group) => <article key={group.title}><h3>{group.title}</h3><p>{group.items}</p></article>)}</div><div className="stack-list"><p className="page-label">Stack</p><span>HTML</span><span>CSS</span><span>JavaScript</span><span>React</span><span>TypeScript</span><span>Node.js</span><span>PostgreSQL</span><span>Git</span><span>GitHub</span><span>Figma</span></div></section><section className="portfolio-section playground-section" id="playground"><div className="section-heading section-heading-row"><div><p className="page-label">Experiments</p><h2>Playground.</h2></div><p className="section-lede">Small studies for staying curious.</p></div><div className="playground-list">{["Interactive 3D Interface", "Animation Experiment", "Dashboard Concept", "AI Product Experiment", "UX Interaction Study"].map((title, index) => <a href="#contact" key={title}><span>0{index + 1}</span><strong>{title}</strong><span>↗</span></a>)}</div></section><section className="portfolio-section github-section" id="github"><div className="section-heading section-heading-row"><div><p className="page-label">Building in public</p><h2>Work that keeps<br />moving.</h2></div><a className="text-link" href="https://github.com/shrestha-shubham" target="_blank" rel="noreferrer">Visit GitHub ↗</a></div><div className="repo-list">{projects.slice(0, 4).map((project) => <a href="https://github.com/shrestha-shubham" target="_blank" rel="noreferrer" key={project.number}><span>{project.title}</span><small>{project.category}</small><small>{project.technology}</small><small>{project.year}</small><b>↗</b></a>)}<a href="https://github.com/shrestha-shubham" target="_blank" rel="noreferrer"><span>Other future projects</span><small>In progress</small><small>Various</small><small>2026</small><b>↗</b></a></div></section><section className="portfolio-section about-section" id="about" data-nav-section="about"><div className="section-heading"><p className="page-label">About</p><h2>I like building at the<br />intersection of business<br />and technology.</h2></div><div className="about-grid"><p className="section-lede">I am interested in the space where business questions become digital products. I enjoy understanding how people work, shaping clearer systems and writing the software that makes an idea useful in the world. Design and development are tools for solving problems, learning quickly and making meaningful things.</p><div className="info-blocks"><div><b>Education</b><span>BIM / relevant education</span></div><div><b>Focus</b><span>Business × Technology × Product</span></div><div><b>Interests</b><span>Digital Products · AI · UI/UX · Full-Stack Development · Business Systems</span></div></div></div></section><section className="portfolio-section currently-section" id="currently"><div className="section-heading"><p className="page-label">Right now</p><h2>Currently.</h2></div><div className="currently-list"><p><b>Learning</b><span>Full-stack development · Product thinking</span></p><p><b>Building</b><span>Digital products & experiments</span></p><p><b>Exploring</b><span>AI · Product Design · Business Technology</span></p><p><b>Looking for</b><span>Opportunities to build meaningful products</span></p></div></section><section className="portfolio-section contact-section" id="contact" data-nav-section="contact"><div className="section-heading"><p className="page-label">Start a conversation</p><h2>Have an idea?<br />Let's build it.</h2><div className="contact-links"><a href="mailto:shresthashubham618@gmail.com">Email ↗</a><a href="https://github.com/shrestha-shubham" target="_blank" rel="noreferrer">GitHub ↗</a><a href="https://www.linkedin.com/in/shubham-shrestha-01a4183ba/" target="_blank" rel="noreferrer">LinkedIn ↗</a></div></div><ContactForm /></section><footer className="portfolio-footer"><strong>SO.</strong><span>2026</span><small>Business × Technology</small><nav><a href="#work">Work</a><a href="#about">About</a><a href="#github">GitHub</a><a href="https://www.linkedin.com/in/shubham-shrestha-01a4183ba/">LinkedIn</a></nav></footer></SiteShell>;
 }
